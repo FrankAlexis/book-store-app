@@ -27,7 +27,7 @@ export interface Book {
   isbn: string;
 }
 
-const API_URL = "https://08w2xppl-8080.use2.devtunnels.ms/books";
+const API_URL = "http://localhost:8080/books";
 
 /**
  * Action to search for books using the external Google Books API.
