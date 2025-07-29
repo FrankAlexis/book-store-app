@@ -1,21 +1,15 @@
-import { z } from 'zod';
+import {z} from "zod";
 
 export const bookSchema = z.object({
-  title: z.string().min(1, { message: 'Title is required.' }),
-  authors: z.preprocess(
-    (arg) => {
-      if (typeof arg === 'string') {
-        return arg.split(',').map(item => item.trim()).filter(item => item.length > 0);
-      }
-      // If arg is already an array, ensure its elements are strings and filter out empty ones.
-      if (Array.isArray(arg)) {
-        return arg.map(item => String(item).trim()).filter(item => item.length > 0);
-      }
-      // Fallback for other types, or if it's undefined/null
-      return [];
-    },
-    z.array(z.string()).min(1, { message: 'At least one author is required.' })
-  ),
-  publishedDate: z.string().optional(),
-  isbn: z.string().optional(),
+  title: z.string().min(1, {message: "Title is required."}),
+  author: z.string().min(1, {message: "Author is required."}),
+  publicationYear: z
+    .number()
+    .min(1000, {message: "Published date must be a 4-digit year."})
+    .max(new Date().getFullYear(), {
+      message: "Published date cannot be in the future.",
+    }),
+  isbn: z
+    .string()
+    .min(10, {message: "ISBN must be at least 10 characters long."}),
 });
